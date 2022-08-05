@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import sunext.lootclear.commands.MainCommand;
 import sunext.lootclear.listeners.BreakEvent;
 import sunext.lootclear.listeners.ExplodeEvent;
+import sunext.lootclear.listeners.MoveItemEvent;
 import sunext.lootclear.listeners.OpenEvent;
 import sunext.lootclear.managers.ItemManager;
 import sunext.lootclear.managers.PathManager;
@@ -36,6 +37,7 @@ public final class LootClear extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BreakEvent(), this);
         getServer().getPluginManager().registerEvents(new OpenEvent(), this);
         getServer().getPluginManager().registerEvents(new ExplodeEvent(), this);
+        getServer().getPluginManager().registerEvents(new MoveItemEvent(), this);
     }
 
     @Override

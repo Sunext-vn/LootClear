@@ -32,7 +32,6 @@ public class ItemManager {
     }
 
     public void eventExecute(Block block) {
-        System.out.println("--1");
         for (String world : PathManager.WORLD_LIST) {
             if (!block.getWorld().equals(Bukkit.getWorld(world))) {
                 return;
