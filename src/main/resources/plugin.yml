@@ -1,7 +1,6 @@
 name: LootClear
 version: '${project.version}'
 main: sunext.lootclear.LootClear
-api-version: 1.19
 authors: [ sunext_team, HiImSunny ]
 
 commands:
