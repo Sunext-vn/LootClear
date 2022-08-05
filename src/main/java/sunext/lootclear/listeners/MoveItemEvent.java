@@ -8,6 +8,8 @@ import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import sunext.lootclear.LootClear;
 import sunext.lootclear.managers.PathManager;
 
+import java.util.Objects;
+
 public class MoveItemEvent implements Listener {
 
     private final LootClear plugin = LootClear.getInstance();
@@ -15,7 +17,7 @@ public class MoveItemEvent implements Listener {
     @EventHandler
     public void onMoveItem(InventoryMoveItemEvent e) {
         for (String world : PathManager.WORLD_LIST) {
-            if (!e.getSource().getLocation().getWorld().equals(Bukkit.getWorld(world))) {
+            if (!Objects.equals(Objects.requireNonNull(e.getSource().getLocation()).getWorld(), Bukkit.getWorld(world))) {
                 return;
             }
 

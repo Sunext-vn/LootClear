@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.*;
+import org.bukkit.entity.ChestBoat;
 import org.bukkit.entity.minecart.StorageMinecart;
 import org.bukkit.inventory.Inventory;
 import sunext.lootclear.LootClear;
@@ -70,11 +71,23 @@ public class ItemManager {
                 inventory = chest.getInventory();
                 break;
 
-            case "STORAGE_MINECART":
+            case "CHEST_MINECART":
                 StorageMinecart storageMinecart = (StorageMinecart) block.getState();
                 inventory = storageMinecart.getInventory();
                 break;
 
+            case "ACACIA_CHEST_BOAT":
+            case "BIRCH_CHEST_BOAT":
+            case "DARK_OAK_CHEST_BOAT":
+            case "JUNGLE_CHEST_BOAT":
+            case "MANGROVE_CHEST_BOAT":
+            case "OAK_CHEST_BOAT":
+            case "SPRUCE_CHEST_BOAT":
+                ChestBoat chestBoat = (ChestBoat) block.getState();
+                inventory = chestBoat.getInventory();
+                break;
+
+            case "SHULKER_BOX":
             case "WHITE_SHULKER_BOX":
             case "ORANGE_SHULKER_BOX":
             case "MAGENTA_SHULKER_BOX":
