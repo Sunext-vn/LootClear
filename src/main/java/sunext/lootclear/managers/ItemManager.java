@@ -3,9 +3,9 @@ package sunext.lootclear.managers;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
-import org.bukkit.block.Container;
+import org.bukkit.block.*;
+import org.bukkit.entity.ChestBoat;
+import org.bukkit.entity.minecart.StorageMinecart;
 import org.bukkit.inventory.Inventory;
 import sunext.lootclear.LootClear;
 
@@ -33,15 +33,22 @@ public class ItemManager {
     }
 
     public void eventExecute(Block block) {
+        System.out.println("--1");
         for (String world : PathManager.WORLD_LIST) {
-            if (block.getWorld().equals(Bukkit.getWorld(world)))
+            if (!block.getWorld().equals(Bukkit.getWorld(world))) {
                 return;
+            }
+
+            break;
         }
 
-        for (Material chestType : chestType)
-            if (block.getType().equals(chestType))
+        for (Material chestType : chestType) {
+            if (!block.getType().equals(chestType)){
                 return;
+            }
 
+            break;
+        }
 
         if (PathManager.ASYNC) {
 
@@ -51,15 +58,60 @@ public class ItemManager {
             return;
         }
 
+
         removeItem(block);
     }
 
     private void removeItem(Block block) {
-        BlockState state = block.getState();
-        Container container = (Container) state;
-        Inventory inventory = container.getInventory();
+        Inventory inventory = null;
+
+        switch (block.getType().toString()) {
+            case "CHEST":
+            case "TRAPPED_CHEST":
+                Chest chest = (Chest) block.getState();
+                inventory = chest.getInventory();
+                break;
+
+            case "CHEST_MINECART":
+                StorageMinecart storageMinecart = (StorageMinecart) block.getState();
+                inventory = storageMinecart.getInventory();
+                break;
+
+            case "ACACIA_CHEST_BOAT":
+            case "BIRCH_CHEST_BOAT":
+            case "DARK_OAK_CHEST_BOAT":
+            case "JUNGLE_CHEST_BOAT":
+            case "MANGROVE_CHEST_BOAT":
+            case "OAK_CHEST_BOAT":
+            case "SPRUCE_CHEST_BOAT":
+                ChestBoat chestBoat = (ChestBoat) block.getState();
+                inventory = chestBoat.getInventory();
+                break;
+
+            case "SHULKER_BOX":
+            case "WHITE_SHULKER_BOX":
+            case "ORANGE_SHULKER_BOX":
+            case "MAGENTA_SHULKER_BOX":
+            case "LIGHT_BLUE_SHULKER_BOX":
+            case "YELLOW_SHULKER_BOX":
+            case "LIME_SHULKER_BOX":
+            case "PINK_SHULKER_BOX":
+            case "GRAY_SHULKER_BOX":
+            case "LIGHT_GRAY_SHULKER_BOX":
+            case "CYAN_SHULKER_BOX":
+            case "PURPLE_SHULKER_BOX":
+            case "BLUE_SHULKER_BOX":
+            case "BROWN_SHULKER_BOX":
+            case "GREEN_SHULKER_BOX":
+            case "RED_SHULKER_BOX":
+            case "BLACK_SHULKER_BOX":
+                ShulkerBox shulkerBox = (ShulkerBox) block.getState();
+                inventory = shulkerBox.getInventory();
+                break;
+        }
 
         for (Material item : plugin.getItemManager().getClearItem()) {
+            assert inventory != null;
             if (inventory.contains(item))
                 inventory.remove(item);
         }
